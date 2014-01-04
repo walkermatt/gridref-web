@@ -7,6 +7,7 @@
                  [compojure "1.1.6"]
                  [ring/ring-jetty-adapter "1.2.1"]
                  [ring/ring-devel "1.2.1"]
+                 [ring-middleware-format "0.3.1"]
                  [environ "0.4.0"]
                  [gridref "0.1.1"]]
   :min-lein-version "2.0.0"
@@ -15,4 +16,4 @@
   :ring {:handler gridref-web.web/handler}
   :hooks [environ.leiningen.hooks]
   :main gridref-web.web
-  :profiles {:production {:env {:production true}}})
+  :profiles {:production {:env {:production false}}})

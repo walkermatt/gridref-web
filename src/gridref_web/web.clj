@@ -1,8 +1,10 @@
 (ns gridref-web.web
-  (:require [compojure.core :refer [defroutes GET PUT POST DELETE ANY]]
-            [compojure.handler :refer [site api]]
+  (:require [compojure.core :refer [defroutes GET ANY]]
+            [compojure.handler :refer [api]]
             [compojure.route :as route]
             [clojure.java.io :as io]
+            [ring.util.response :refer [response]]
+            [ring.middleware.format-response :refer [wrap-restful-response]]
             [ring.middleware.stacktrace :as trace]
             [ring.adapter.jetty :as jetty]
             [environ.core :refer [env]]
@@ -12,25 +14,27 @@
   [figures]
   (try (Integer/parseInt figures) (catch Exception e 10)))
 
-(defn gridref
-  [grid]
-  (str (if-let [coord (gridref2coord (parse-gridref grid))]
-         coord
-         "Invalid grid reference.")))
+(defn convert
+  [arg figures]
+  (if-let [gridref (parse-gridref arg)]
+    {:coord (gridref2coord gridref) :gridref gridref}
+    (if-let [coord (parse-coord arg)]
+      (let [figures (parse-figures figures)]
+        {:gridref (coord2gridref coord figures) :figures figures :coord coord}))))
 
-(defn coord
-  [e n figures]
-  (str (if-let [grid (coord2gridref (parse-coord (str e " " n)) (parse-figures figures))]
-         grid
-         "Invalid coordinate pair.")))
+(defn resp-or-nil
+  [result]
+  (if result (response result)))
 
 (defroutes routes
   (GET "/" []
        {:status 200
         :headers {"Content-Type" "text/plain"}
-        :body (pr-str ["Hello" :from 'Heroku])})
-  (GET "/gridref/:grid" [grid] (gridref grid))
-  (GET "/coord/:e,:n" [e n figures] (coord e n figures))
+        :body "GridRef"})
+  ; Support passing a gridref or space seperated coord (spaces must be url encoded)
+  (GET "/convert/:arg" [arg figures] (resp-or-nil (convert arg figures)))
+  ; Support passing a comma seperated coord: 123456,123456
+  (GET "/convert/:e,:n" [e n figures] (resp-or-nil (convert (str e " " n) figures)))
   (ANY "*" []
        (route/not-found (slurp (io/resource "404.html")))))
 
@@ -46,6 +50,7 @@
                  ((if (env :production)
                     wrap-error-page
                     trace/wrap-stacktrace))
+                 (wrap-restful-response)
                  api))
 
 (defn -main [& [port]]

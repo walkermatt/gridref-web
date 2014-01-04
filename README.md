@@ -10,3 +10,8 @@ launch from the command line:
 
     $ lein run -m gridref-web.web
 
+## To-do
+
+* Add home page including usage
+* Return JSON etc.
+* Add OPTIONS with api?
