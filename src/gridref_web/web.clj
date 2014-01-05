@@ -8,11 +8,7 @@
             [ring.middleware.stacktrace :as trace]
             [ring.adapter.jetty :as jetty]
             [environ.core :refer [env]]
-            [gridref.core :refer [parse-gridref parse-coord gridref2coord coord2gridref]]))
-
-(defn parse-figures
-  [figures]
-  (try (Integer/parseInt figures) (catch Exception e 10)))
+            [gridref.core :refer [parse-gridref parse-coord parse-figures gridref2coord coord2gridref]]))
 
 (defn convert
   [arg figures]
