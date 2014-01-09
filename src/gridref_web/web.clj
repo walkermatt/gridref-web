@@ -3,7 +3,7 @@
             [compojure.handler :refer [api]]
             [compojure.route :as route]
             [clojure.java.io :as io]
-            [ring.util.response :refer [response]]
+            [ring.util.response :refer [response status]]
             [ring.middleware.format-response :refer [wrap-restful-response]]
             [ring.middleware.stacktrace :as trace]
             [ring.adapter.jetty :as jetty]
@@ -27,10 +27,12 @@
        {:status 200
         :headers {"Content-Type" "text/plain"}
         :body "GridRef"})
-  ; Support passing a gridref or space seperated coord (spaces must be url encoded)
+  ; Support passing a gridref or space separated coord (spaces must be url encoded)
   (GET "/convert/:arg" [arg figures] (resp-or-nil (convert arg figures)))
-  ; Support passing a comma seperated coord: 123456,123456
+  ; Support passing a comma separated coord: 123456,123456
   (GET "/convert/:e,:n" [e n figures] (resp-or-nil (convert (str e " " n) figures)))
+  (GET "/convert/*" [:as req] (status (response {:status "invalid-input"
+                                                 :message "Please pass a grid reference or coordinate pair for example: /convert/st12 or /convert/123456,123456"}) 400))
   (ANY "*" []
        (route/not-found (slurp (io/resource "404.html")))))
 

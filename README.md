@@ -1,6 +1,6 @@
 # gridref-web
 
-A [Heroku](http://www.heroku.com) web app using Compojure.
+Web service to convert an alpha numeric Ordnance Survey grid reference to easting / northing or easting / northing to a grid reference.
 
 ## Usage
 
@@ -13,5 +13,4 @@ launch from the command line:
 ## To-do
 
 * Add home page including usage
-* Return JSON etc.
 * Add OPTIONS with api?
