@@ -10,7 +10,7 @@
                  [ring-middleware-format "0.3.1"]
                  [org.clojure/data.json "0.2.3"]
                  [environ "0.4.0"]
-                 [gridref "0.1.1"]
+                 [gridref "0.1.2"]
                  [ring-mock "0.1.5"]]
   :min-lein-version "2.0.0"
   :plugins [[environ/environ.lein "0.3.1"]
