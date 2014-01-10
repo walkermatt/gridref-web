@@ -1,6 +1,8 @@
-# gridref-web
+# GridRef Web
 
-Web service to convert an alpha numeric Ordnance Survey grid reference to easting / northing or easting / northing to a grid reference.
+A super simple service to convert an alpha numeric Ordnance Survey grid reference to easting / northing or easting / northing to a grid reference.
+
+View online at [http://gridref.longwayaround.org.uk](http://gridref.longwayaround.org.uk).
 
 ## Usage
 
@@ -10,7 +12,6 @@ launch from the command line:
 
     $ lein run -m gridref-web.web
 
-## To-do
+## Todo
 
-* Add home page including usage
 * Add OPTIONS with api?

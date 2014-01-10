@@ -1,6 +1,6 @@
-(defproject gridref-web "0.1.0"
-  :description "Web service to convert an alpha numeric Ordnance Survey grid reference to easting / northing or easting / northing to a grid reference."
-  :url "http://github.com/walkermatt/gridref-web"
+(defproject gridref-web "0.1.1"
+  :description "A super simple service to convert an alpha numeric Ordnance Survey grid reference to easting / northing or easting / northing to a grid reference."
+  :url "http://gridref.longwayaround.org.uk"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
