@@ -23,16 +23,14 @@
   (if result (response result)))
 
 (defroutes routes
-  (GET "/" []
-       {:status 200
-        :headers {"Content-Type" "text/plain"}
-        :body "GridRef"})
+  (GET "/" [] (slurp (io/resource "home.html")))
   ; Support passing a gridref or space separated coord (spaces must be url encoded)
   (GET "/convert/:arg" [arg figures] (resp-or-nil (convert arg figures)))
   ; Support passing a comma separated coord: 123456,123456
   (GET "/convert/:e,:n" [e n figures] (resp-or-nil (convert (str e " " n) figures)))
   (GET "/convert/*" [:as req] (status (response {:status "invalid-input"
                                                  :message "Please pass a grid reference or coordinate pair for example: /convert/st12 or /convert/123456,123456"}) 400))
+  (route/resources "/")
   (ANY "*" []
        (route/not-found (slurp (io/resource "404.html")))))
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GridRef - Convert to and from Ordnance Survey GB Grid Reference</title>
+        <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <header>
+            <h1>GridRef</h1>
+            <aside>A super simple service to convert an alpha numeric Ordnance Survey grid reference to easting / northing or easting / northing to a grid reference.</aside>
+        </header>
+        <h2 id="usage">Usage</h2>
+        <p>There is a single route <a href="/convert/">/convert/</a> which can be passed either a grid reference or a coordinate pair.</p>
+        <p><pre><code>
+        /convert/&lt;gridref&gt;
+        /convert/&lt;coordinate&gt;?figures=&lt;n&gt;
+        </code></pre></p>
+        <h3>Output formats</h3>
+        <p>The service returns data in either <code>JSON</code>, <code>EDN</code> or <code>YAML</code> if an appropriate <code>mime-type</code> is specified via the <code>Accept</code> http header (<code>application/json</code>, <code>application/edn</code>, <code>application/x-yaml</code> respectively). If you try the examples in browser you will get a HTML response with embedded YAML.</p>
+        <h3>Examples</h3>
+        <h4>Grid reference to coordinate</h4>
+        <p><pre>
+    <a href="/convert/ST12">/convert/ST12</a>
+
+        {
+            "coord": [310000.0, 120000.0],
+            "gridref": "ST12"
+        }
+
+    <a href="/convert/NN%2016650%2071250">/convert/NN 16650 71250</a>
+
+        {
+            "coord": [216650.0, 771250.0],
+            "gridref": "NN1665071250"
+        }
+
+        </pre></p>
+        <h4>Coordinate to grid reference</h4>
+        <p><pre>
+    <a href="/convert/[300000.0 100000.0]">/convert/[300000.0 100000.0]</a>
+
+        {
+            "gridref": "ST0000000000",
+            "coord": [300000, 100000],
+            "figures": 10
+        }
+
+    <a href="/convert/216650.0%20771250.0">/convert/216650.0 771250.0</a>
+
+        {
+            "gridref": "NN1665071250",
+            "coord": [216650, 771250],
+            "figures": 10,
+        }
+
+    <a href="/convert/533600,180500?figures=4">/convert/533600,180500?figures=4</a>
+
+        {
+            "gridref": "TQ3380",
+            "coord": [533600, 180500],
+            "figures": 4
+        }
+        </pre></p>
+        <h2>Issues</h2>
+        <p>If you find an issue or have a question about usage then feel free to <a href="https://github.com/walkermatt/gridref-web/issues">create an issue on GitHub</a>.</p>
+        <h2>Source</h2>
+        <p>The source code for this Clojure web app is available on GitHub in the <a href="https://github.com/walkermatt/gridref-web">walkermatt/gridref-web</a> repository. The actual conversion is done by the gridref Clojure library also on GitHub in the <a href="https://github.com/walkermatt/gridref">walkermatt/gridref</a> repository and released <a href="https://clojars.org/gridref">on Clojars</a>.</p>
+        <footer>&copy; Matt Walker - Twitter: <a href="http://twitter.com/_walkermatt">@_walkermatt</a>, GitHub: <a href="http://github.com/walkermatt">@walkermatt</a>, Web: <a href="http://longwayaround.org.uk">longwayaround.org.uk</a></footer>
+    </body>
+</html>
