@@ -22,9 +22,14 @@
   [result]
   (if result (response result)))
 
+(defn port-or-nil
+  [req]
+  (if-let [port (:server-port req)]
+    (if (= port 80) nil port)))
+
 (defn convert-url
   [req]
-  (str (name (:scheme req)) "://" (:server-name req) (if-let [port (:server-port req)] (str ":" port)) "/convert"))
+  (str (name (:scheme req)) "://" (:server-name req) (if-let [port (port-or-nil req)] (str ":" port)) "/convert"))
 
 (defroutes routes
   (GET "/" [:as req] (clojure.string/replace (slurp (io/resource "home.html")) #"\{convert_url\}" (convert-url req)))
