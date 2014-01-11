@@ -22,8 +22,12 @@
   [result]
   (if result (response result)))
 
+(defn convert-url
+  [req]
+  (str (name (:scheme req)) "://" (:server-name req) (if-let [port (:server-port req)] (str ":" port)) "/convert"))
+
 (defroutes routes
-  (GET "/" [] (slurp (io/resource "home.html")))
+  (GET "/" [:as req] (clojure.string/replace (slurp (io/resource "home.html")) #"\{convert_url\}" (convert-url req)))
   ; Support passing a gridref or space separated coord (spaces must be url encoded)
   (GET "/convert/:arg" [arg figures] (resp-or-nil (convert arg figures)))
   ; Support passing a comma separated coord: 123456,123456

@@ -15,3 +15,4 @@ launch from the command line:
 ## Todo
 
 * Add OPTIONS with api?
+* JSONP middleware?
