@@ -65,6 +65,35 @@
             "figures": 4
         }
         </pre></p>
+        <h2>Demo</h2>
+        <p>Enter a grid reference or coordinate pair and click convert.</p>
+        <form id="convert" action="{convert_url}/" method="post">
+            <label for="val">Value: </label>
+            <input type="text" name="val" id="val" value="ST" />
+            <label for="fig">Figures (only relevant when you enter a coord): </label>
+            <input type="number" min="0" max="10" step="2" name="fig" id="fig" value="6" />
+            <input type="submit" name="submit" value="Convert" />
+            <p><code id="out"></code></p>
+        </form>
+        <script type="text/javascript">
+            var frm = document.getElementById('convert');
+            frm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                var xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", function(event) {
+                    showMsg(event.target.responseText);
+                });
+                xhr.addEventListener("error", function(event) {
+                    showMsg('Oups! Something goes wrong.');
+                });
+                xhr.open("GET", frm.action + frm.val.value + '?figures=' + frm.fig.value);
+                xhr.send();
+                showMsg('...');
+            });
+            function showMsg(msg) {
+                document.getElementById('out').innerText = msg;
+            }
+        </script>
         <h2>Issues</h2>
         <p>If you find an issue or have a question about usage then feel free to <a href="https://github.com/walkermatt/gridref-web/issues">create an issue on GitHub</a>.</p>
         <h2>Source</h2>

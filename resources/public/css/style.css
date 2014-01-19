@@ -4,3 +4,9 @@ body {
   margin: 0 2em;
 }
 
+label, input {
+    display: block;
+}
+input {
+    margin-bottom: 1em;
+}
