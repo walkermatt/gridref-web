@@ -5,6 +5,7 @@
             [clojure.java.io :as io]
             [ring.util.response :refer [response status]]
             [ring.middleware.format-response :refer [wrap-restful-response]]
+            [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.stacktrace :as trace]
             [ring.adapter.jetty :as jetty]
             [environ.core :refer [env]]
@@ -55,7 +56,10 @@
                  ((if (env :production)
                     wrap-error-page
                     trace/wrap-stacktrace))
+                 ; Return JSON, EDN or YAML based on Accept header
                  (wrap-restful-response)
+                 ; Allow CORS requests with any origin
+                 (wrap-cors :access-control-allow-origin #".*")
                  api))
 
 (defn -main [& [port]]
