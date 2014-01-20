@@ -11,8 +11,3 @@ commented out forms at the bottom of `web.clj` from your editor or
 launch from the command line:
 
     $ lein run -m gridref-web.web
-
-## Todo
-
-* Add OPTIONS with api?
-* JSONP middleware?

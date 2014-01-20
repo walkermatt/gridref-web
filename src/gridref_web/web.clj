@@ -1,9 +1,9 @@
 (ns gridref-web.web
-  (:require [compojure.core :refer [defroutes GET ANY]]
+  (:require [compojure.core :refer [defroutes OPTIONS GET ANY]]
             [compojure.handler :refer [api]]
             [compojure.route :as route]
             [clojure.java.io :as io]
-            [ring.util.response :refer [response status]]
+            [ring.util.response :refer [response status header]]
             [ring.middleware.format-response :refer [wrap-restful-response]]
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.stacktrace :as trace]
@@ -32,14 +32,20 @@
   [req]
   (str (name (:scheme req)) "://" (:server-name req) (if-let [port (port-or-nil req)] (str ":" port)) "/convert"))
 
+(def usage-body {:routes {"/convert/<gridref>" "Convert a grid reference to coordinate pair."
+                          "/convert/<coord>?figures=<n>" "Convert a coordinate pair to grid reference optionally specifying the number of figures."}})
+
 (defroutes routes
   (GET "/" [:as req] (clojure.string/replace (slurp (io/resource "home.html")) #"\{convert_url\}" (convert-url req)))
   ; Support passing a gridref or space separated coord (spaces must be url encoded)
   (GET "/convert/:arg" [arg figures] (resp-or-nil (convert arg figures)))
   ; Support passing a comma separated coord: 123456,123456
   (GET "/convert/:e,:n" [e n figures] (resp-or-nil (convert (str e " " n) figures)))
-  (GET "/convert/*" [:as req] (status (response {:status "invalid-input"
-                                                 :message "Please pass a grid reference or coordinate pair for example: /convert/st12 or /convert/123456,123456"}) 400))
+  (GET "/convert/*" [:as req] (status (response (merge
+                                                  usage-body
+                                                  {:status "invalid-input"
+                                                   :message "Please pass a grid reference or coordinate pair (try: /convert/st12 or /convert/123456,123456)"})) 400))
+  (OPTIONS "/*" [] (header (response usage-body) "Allow" "GET"))
   (route/resources "/")
   (ANY "*" []
        (route/not-found (slurp (io/resource "404.html")))))
