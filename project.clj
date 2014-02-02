@@ -11,7 +11,7 @@
                  [ring-cors "0.1.0"]
                  [org.clojure/data.json "0.2.3"]
                  [environ "0.4.0"]
-                 [gridref "0.1.2"]
+                 [gridref "0.1.3"]
                  [ring-mock "0.1.5"]]
   :min-lein-version "2.0.0"
   :plugins [[environ/environ.lein "0.3.1"]
