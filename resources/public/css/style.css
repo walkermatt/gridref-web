@@ -7,6 +7,12 @@ body {
 label, input {
     display: block;
 }
+
 input {
     margin-bottom: 1em;
+}
+
+code {
+    font-family: "Ubuntu Mono" monospace;
+    white-space: pre-wrap;
 }

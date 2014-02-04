@@ -13,17 +13,17 @@
         </header>
         <h2 id="usage">Usage</h2>
         <p>There is a single route <a href="/convert/">/convert/</a> which can be passed either a grid reference or a coordinate pair.</p>
-        <p><pre><code>
+        <p><code>
         /convert/&lt;gridref&gt;
         /convert/&lt;coordinate&gt;?figures=&lt;n&gt;
-        </code></pre></p>
+        </code></p>
         <h3>Output formats</h3>
         <p>The service returns data in either <code>JSON</code>, <code>EDN</code> or <code>YAML</code> if an appropriate <code>mime-type</code> is specified via the <code>Accept</code> http header (<code>application/json</code>, <code>application/edn</code>, <code>application/x-yaml</code> respectively). If you try the examples in browser you will get a HTML response with embedded YAML.</p>
         <h3>Cross domain requests</h3>
         <p>Cross domain requests are supported from any domain via <a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross-origin resource sharing (CORS)</a>.</p>
         <h3>Examples</h3>
         <h4>Grid reference to coordinate</h4>
-        <p><pre>
+        <p><code>
     <a href="{convert_url}/ST12">{convert_url}/ST12</a>
 
         {
@@ -45,9 +45,9 @@
             "gridref": "NN1665071250"
         }
 
-        </pre></p>
+        </code></p>
         <h4>Coordinate to grid reference</h4>
-        <p><pre>
+        <p><code>
     <a href="{convert_url}/[300000.0 100000.0]">{convert_url}/[300000.0 100000.0]</a>
 
         {
@@ -71,7 +71,7 @@
             "coord": [533600, 180500],
             "figures": 4
         }
-        </pre></p>
+        </code></p>
         <h2>Demo</h2>
         <p>Enter a grid reference or coordinate pair and click convert.</p>
         <form id="convert" action="{convert_url}/" method="post">
