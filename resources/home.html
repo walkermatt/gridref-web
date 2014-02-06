@@ -17,6 +17,15 @@
         /convert/&lt;gridref&gt;
         /convert/&lt;coordinate&gt;?figures=&lt;n&gt;
         </code></p>
+        <h3>&lt;gridref&gt;</h3>
+        <p>Grid references are of the form <code>ST23NE</code>, the grid letters (<code>ST</code>) are mandatory, the figures (<code>23</code>) and bearing (<code>NE</code>) are optional. Lower-case characters and spaces are tolerated.</p>
+        <h3>&lt;coordinate&gt;</h3>
+        <p>A coordinate pair is of the form <code>[123456.0 123456.0]</code> where the first number is the easting and the second the northing. The square brackets are optional, integers or floats are fine and coordinates can be comma separated so the following are all accepted:
+        <ul>
+            <li><code>123456.0 123456.0</code></li>
+            <li><code>123456 123456</code></li>
+            <li><code>123456.0,123456.0</code></li>
+        </ul>
         <h3>Output formats</h3>
         <p>The service returns data in either <code>JSON</code>, <code>EDN</code> or <code>YAML</code> if an appropriate <code>mime-type</code> is specified via the <code>Accept</code> http header (<code>application/json</code>, <code>application/edn</code>, <code>application/x-yaml</code> respectively). If you try the examples in browser you will get a HTML response with embedded YAML.</p>
         <h3>Cross domain requests</h3>
