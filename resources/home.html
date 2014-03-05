@@ -103,6 +103,7 @@
                     showMsg('Oups! Something goes wrong.');
                 });
                 xhr.open("GET", frm.action + frm.val.value + '?figures=' + frm.fig.value);
+                xhr.setRequestHeader("Accept", "application/json");
                 xhr.send();
                 showMsg('...');
             });
