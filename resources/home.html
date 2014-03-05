@@ -91,26 +91,7 @@
             <input type="submit" name="submit" value="Convert" />
             <p><code id="out"></code></p>
         </form>
-        <script type="text/javascript">
-            var frm = document.getElementById('convert');
-            frm.addEventListener("submit", function(event) {
-                event.preventDefault();
-                var xhr = new XMLHttpRequest();
-                xhr.addEventListener("load", function(event) {
-                    showMsg(event.target.responseText);
-                });
-                xhr.addEventListener("error", function(event) {
-                    showMsg('Oups! Something goes wrong.');
-                });
-                xhr.open("GET", frm.action + frm.val.value + '?figures=' + frm.fig.value);
-                xhr.setRequestHeader("Accept", "application/json");
-                xhr.send();
-                showMsg('...');
-            });
-            function showMsg(msg) {
-                document.getElementById('out').innerHTML = msg;
-            }
-        </script>
+        <script type="text/javascript" src="/js/convert.js"></script>
         <h2>Issues</h2>
         <p>If you find an issue or have a question about usage then feel free to <a href="https://github.com/walkermatt/gridref-web/issues">create an issue on GitHub</a>.</p>
         <h2>Source</h2>
