@@ -5,6 +5,12 @@
             [clojure.edn]
             [clojure.data.json]))
 
+(deftest test-substitute
+  (testing "Substitute place holder strings"
+    (is (= (substitute "Hi {name}!" {"name" "Matt"}) "Hi Matt!"))
+    (is (= (substitute "Hi {first} {last}." {"first" "Matt" "last" "Walker"}) "Hi Matt Walker."))
+    (is (= (substitute "Hi {first} {last}. {unknown}" {"first" "Matt" "last" "Walker"}) "Hi Matt Walker. {unknown}"))))
+
 (deftest test-convert
   (testing "Valid grid ref returns a map"
     (let [result (convert "ST" nil)]

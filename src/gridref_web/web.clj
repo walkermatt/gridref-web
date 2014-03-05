@@ -12,6 +12,16 @@
             [environ.core :refer [env]]
             [gridref.core :refer [parse-gridref parse-coord parse-figures gridref2coord coord2gridref]]))
 
+(defn substitute
+  "Substitute all keys identified by {name} in a string template with
+  corresponding values from supplied dict. Keys in the dict are expected to be
+  strings. Placeholders without a key in the dict are let unchanged."
+  [st di]
+  (loop [s st d di]
+    (if-let [[match replacement] (first d)]
+      (recur (clojure.string/replace s (str "{" match "}") replacement) (rest d))
+      s)))
+
 (defn convert
   [arg figures]
   (if-let [gridref (parse-gridref arg)]
@@ -37,7 +47,7 @@
                           "/convert/<coord>?figures=<n>" "Convert a coordinate pair to grid reference optionally specifying the number of figures."}})
 
 (defroutes routes
-  (GET "/" [:as req] (clojure.string/replace (slurp (io/resource "home.html")) #"\{convert_url\}" (convert-url req)))
+  (GET "/" [:as req] (substitute (slurp (io/resource "home.html")) {"convert_url" (convert-url req)}))
   ; Support passing a gridref or space separated coord (spaces must be url encoded)
   (GET "/convert/:arg" [arg figures] (resp-or-nil (convert arg figures)))
   ; Support passing a comma separated coord: 123456,123456
@@ -62,8 +72,9 @@
 (defn wrap-yaml-in-html
   "Convert response body to yaml and wrap in html for display in browser"
   [body]
-  (clojure.string/replace (slurp (io/resource "convert.html")) #"\{body\}"
-    (org.apache.commons.lang3.StringEscapeUtils/escapeHtml4 (yaml/generate-string body))))
+  (substitute
+    (slurp (io/resource "convert.html"))
+    {"body" (org.apache.commons.lang3.StringEscapeUtils/escapeHtml4 (yaml/generate-string body))}))
 
 (def handler (-> routes
                  ((if (env :production)
