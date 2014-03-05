@@ -16,11 +16,8 @@
   "Substitute all keys identified by {name} in a string template with
   corresponding values from supplied dict. Keys in the dict are expected to be
   strings. Placeholders without a key in the dict are let unchanged."
-  [st di]
-  (loop [s st d di]
-    (if-let [[match replacement] (first d)]
-      (recur (clojure.string/replace s (str "{" match "}") replacement) (rest d))
-      s)))
+  [s d]
+  (reduce (fn [s [m r]] (clojure.string/replace s (str "{" m "}") r)) s d))
 
 (defn convert
   [arg figures]
