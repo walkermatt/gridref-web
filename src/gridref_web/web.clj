@@ -10,7 +10,8 @@
             [ring.middleware.stacktrace :as trace]
             [ring.adapter.jetty :as jetty]
             [environ.core :refer [env]]
-            [gridref.core :refer [parse-gridref parse-coord parse-figures gridref2coord coord2gridref]]))
+            [gridref.core :refer [parse-gridref parse-coord gridref2coord coord2gridref]]
+            [gridref.util :refer [parse-figures]]))
 
 (defn substitute
   "Substitute all keys identified by {name} in a string template with

@@ -6,12 +6,6 @@ View online at [http://gridref.longwayaround.org.uk](http://gridref.longwayaroun
 
 ## Usage
 
-To start a local web server for development you can either eval the
-commented out forms at the bottom of `web.clj` from your editor or
-launch from the command line:
+To start a local web server for development you can use ring:
 
-    $ lein run -m gridref-web.web
-
-## Todo
-
-* HTML escape angle brackets in HTML with YAML body?
+    $ lein ring server-headless
