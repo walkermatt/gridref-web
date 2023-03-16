@@ -1,0 +1,33 @@
+# flyctl launch added from .gitignore
+**/pom.xml
+**/*jar
+classes
+.lein-deps-sum
+.lein-failures
+.lein-repl-history
+.nrepl-port
+.lein-env
+checkouts
+.env
+target
+
+# flyctl launch added from checkouts/gridref/.gitignore
+checkouts/gridref/target
+checkouts/gridref/classes
+checkouts/gridref/checkouts
+checkouts/gridref/**/pom.xml
+checkouts/gridref/**/pom.xml.asc
+checkouts/gridref/**/*.jar
+checkouts/gridref/**/*.class
+checkouts/gridref/.lein-*
+checkouts/gridref/.nrepl-port
+
+# flyctl launch added from checkouts/ring-middleware-format/.gitignore
+checkouts/ring-middleware-format/**/pom.xml*
+checkouts/ring-middleware-format/**/*jar
+checkouts/ring-middleware-format/lib
+checkouts/ring-middleware-format/classes
+checkouts/ring-middleware-format/target
+checkouts/ring-middleware-format/**/.lein-failures
+checkouts/ring-middleware-format/**/.lein-deps-sum
+fly.toml
