@@ -38,9 +38,16 @@
   (if-let [port (:server-port req)]
     (if (= port 80) nil port)))
 
+(defn client-protocol
+  "Determine the client protocol (http or https) by first checking for the
+  x-forwarded-proto header (commonly set by a load balancer or proxy
+  in front of the app) and falling back to the ring request :scheme."
+  [req]
+  (name (or (get-in req [:headers "x-forwarded-proto"]) (:scheme req))))
+
 (defn convert-url
   [req]
-  (str (name (:scheme req)) "://" (:server-name req) (if-let [port (port-or-nil req)] (str ":" port)) "/convert"))
+  (str (client-protocol req) "://" (:server-name req) (if-let [port (port-or-nil req)] (str ":" port)) "/convert"))
 
 (def usage-body {:routes {"/convert/<gridref>" "Convert a grid reference to coordinate pair."
                           "/convert/<coord>?figures=<n>" "Convert a coordinate pair to grid reference optionally specifying the number of figures."}})
