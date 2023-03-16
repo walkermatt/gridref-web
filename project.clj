@@ -20,4 +20,5 @@
   :ring {:handler gridref-web.web/handler}
   :hooks [environ.leiningen.hooks]
   :main gridref-web.web
+  :aot [gridref-web.web]
   :profiles {:production {:env {:production false}}})
